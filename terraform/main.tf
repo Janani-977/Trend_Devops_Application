@@ -117,6 +117,7 @@ resource "aws_instance" "jenkins_ec2" {
   security_groups        = [aws_security_group.jenkins_sg.id]
   key_name               = "linux_ssh_keypair" # Make sure this key exists in your AWS account
   iam_instance_profile   = aws_iam_instance_profile.jenkins_profile.name
+  associate_public_ip_address = true
 
   user_data = <<-EOF
               #!/bin/bash
