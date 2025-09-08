@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trendy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trendy
+  template:
+    metadata:
+      labels:
+        app: trendy
+    spec:
+      containers:
+      - name: trendy-container
+        image: janani977/trendy-app-repo:latest
+        ports:
+        - containerPort: 80
