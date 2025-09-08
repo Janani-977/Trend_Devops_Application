@@ -1,0 +1,9 @@
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.log
+*.exe
+.terraform/
+*.zip
+node_modules/
+dist/
