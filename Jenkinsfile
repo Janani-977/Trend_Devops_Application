@@ -46,7 +46,11 @@ pipeline {
 
     stage('Deploy to EKS') {
       steps {
-        sh '''
+        script {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+            sh 'aws sts get-caller-identity || { echo "AWS credentials invalid"; exit 1; }'
+          
+            sh '''
           echo "Updating kubeconfig..."
           aws eks update-kubeconfig --name cluster01 --region ap-south-1 || { echo "Kubeconfig update failed"; exit 1; }
 
@@ -54,6 +58,8 @@ pipeline {
           kubectl apply -f k8s/deployment.yaml || { echo "Deployment failed"; exit 1; }
           kubectl apply -f k8s/service.yaml || { echo "Service creation failed"; exit 1; }
         '''
+          }
+        }
       }
     }
   }
